@@ -1,19 +1,21 @@
 # The names of the students
+students = [
+  "Dr. Hannibal Lecter",
+  "Darth Vader",
+  "Nurse Ratched",
+  "Michael Corleone",
+  "ALex DeLarge",
+  "The Wicked Witch of the West",
+  "Terminator",
+  "Freddy Krueger",
+  "The Joker",
+  "Joffery Baratheon",
+  "Norman Bates"
+]
+
+
 puts "The students of Villians Academy"
 puts "----------------"
-puts "Dr. Hannibal Lecter"
-puts "Darth Vader"
-puts "Nurse Ratched"
-puts "Michael Corleone"
-puts "ALex DeLarge"
-puts "The Wicked Witch of the West"
-puts "Terminator"
-puts "Freddy Krueger"
-puts "The Joker"
-puts "Joffery Baratheon"
-puts "Norman Bates"
+students.each { |student| puts student }
 # Final line
-print "Overall, we have "
-# Total number of students
-print 11
-puts " great students"
+puts "Overall, we have #{students.count} great students."
