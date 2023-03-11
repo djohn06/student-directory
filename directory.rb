@@ -1,40 +1,75 @@
+# Create an instance variable of the students
+@students = [] # an empty array accessible to all methods
+
+# Create method that prints the menu
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
 # Create method for inputting students
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-# Create an empty array for the students that will eventually fill it.
-  students = []
+  
   name = gets.chomp
 # This means "while the name is NOT(!) empty do"
   while !name.empty? do
-    # '<<'' adds the name as a hash into the students array
-    students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students."
-    # Requests the name of the next student. If filled empty it ends the loop.
+    # '<<'' adds the name as a hash into the students variable
+    @students << {name: name, cohort: :november}
+    puts "Now we have #{@students.count} students.\n"
+    # Requests the name of the next student. If filled empty the loop ends.
     name = gets.chomp
   end
-  # Return the array of students.
-  students
+  # Return the variable of students.
+  @students
 end
 
+# Method to print the header
 def print_header
   puts "The students of Villians Academy"
   puts "----------------"
 end
 
-def print(students)
-  students.each do |student|
+# Method for printing each students name in the instance variable
+def print_student_list
+  @students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
-def print_footer(names)
-  puts "Overall, we have #{names.count} great students."
+# Method to print the footer & overall number of students
+def print_footer
+  puts "\nOverall, we have #{@students.count} great students."
+end
+
+# Create method that 'shows' the students.
+def show_students
+  print_header
+  print_student_list
+  print_footer
+end
+
+# Method to use an interactive menu
+def interactive_menu
+  loop do
+    print_menu
+    selection = gets.chomp
+    # create a case for the selection
+    case selection
+      when "1"
+        # inputs the students
+        input_students
+      when "2"
+        show_students
+      when "9"
+        exit # this will terminate the program
+      else
+        puts "\nI don't know what you meant, please try again."
+    end
+  end
 end
 
 # We let students = input_students so the following methods can run it.
-students = input_students
-
-print_header
-print(students)
-print_footer(students)
+interactive_menu
