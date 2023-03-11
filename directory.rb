@@ -5,6 +5,7 @@
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
   puts "9. Exit"
 end
 
@@ -51,6 +52,22 @@ def show_students
   print_footer
 end
 
+# Create method that saves the students to a textfile
+def save_students
+  #First, open the file for writing
+  file = File.open("students.csv", "w")
+  #iterate over each student of the instance variable
+  @students.each do |student|
+    # We take the student data we've stored as a hash and input it as an array
+    student_data = [student[:name], student[:cohort]]
+    # We convert the array as a string by joining at ','
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  # Close the file at the end. All opened files must be closed at the end
+  file.close
+end
+
 # Method to use an interactive menu
 def interactive_menu
   loop do
@@ -63,6 +80,8 @@ def interactive_menu
         input_students
       when "2"
         show_students
+      when "3"
+        save_students
       when "9"
         exit # this will terminate the program
       else
@@ -71,5 +90,5 @@ def interactive_menu
   end
 end
 
-# We let students = input_students so the following methods can run it.
+# Run the interactive menu which has all the important methods included.
 interactive_menu
