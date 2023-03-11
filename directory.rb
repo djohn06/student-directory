@@ -6,6 +6,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
   puts "9. Exit"
 end
 
@@ -68,6 +69,21 @@ def save_students
   file.close
 end
 
+# Create method to load students into an hash
+def load_students
+  # We are only reading the content
+  file = File.open("students.csv", "r")
+  # The '.readlines' method takes individual lines and returns it as an array
+  file.readlines.each do |line|
+  # Assigning two variables together is called a 'Parallel Assignment'. The
+  # first value to the first variable, second value => second variable, etc
+  name, cohort = line.chomp.split(",")
+  # Use the 'shovel operator' & convert cohort to symbol for consistency
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
+
 # Method to use an interactive menu
 def interactive_menu
   loop do
@@ -82,6 +98,8 @@ def interactive_menu
         show_students
       when "3"
         save_students
+      when "4"
+        load_students
       when "9"
         exit # this will terminate the program
       else
