@@ -15,14 +15,14 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   
-  name = gets.chomp
+  name = STDIN.gets.chomp
 # This means "while the name is NOT(!) empty do"
   while !name.empty? do
     # '<<'' adds the name as a hash into the students variable
     @students << {name: name, cohort: :november}
     puts "Now we have #{@students.count} students.\n"
     # Requests the name of the next student. If filled empty the loop ends.
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
   # Return the variable of students.
   @students
@@ -70,9 +70,9 @@ def save_students
 end
 
 # Create method to load students into an hash
-def load_students
+def load_students(filename = "students.csv")
   # We are only reading the content
-  file = File.open("students.csv", "r")
+  file = File.open(filename, "r")
   # The '.readlines' method takes individual lines and returns it as an array
   file.readlines.each do |line|
   # Assigning two variables together is called a 'Parallel Assignment'. The
@@ -84,11 +84,27 @@ def load_students
   file.close
 end
 
+# Create a method to load students who were previously written in 'students.csv'
+def try_load_students
+  # Give the first argument from the command line
+  filename = ARGV.first
+  # If nothing is given, get out of the method
+  return if filename.nil?
+  # If the method does exist
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else # If the name doesn't exist
+    puts "Sorry, #{filename} doesn't exist."
+    exit # Exit out the program
+  end
+end
+
 # Method to use an interactive menu
 def interactive_menu
   loop do
     print_menu
-    selection = gets.chomp
+    selection = STDIN.gets.chomp
     # create a case for the selection
     case selection
       when "1"
@@ -108,5 +124,7 @@ def interactive_menu
   end
 end
 
-# Run the interactive menu which has all the important methods included.
+# Load the students and run the interactive menu which utilises all
+# the methods created.
+try_load_students
 interactive_menu
